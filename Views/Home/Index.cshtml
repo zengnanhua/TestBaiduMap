@@ -15,7 +15,18 @@
             height: 100%;
             width: 100%;
         }
+        #l-map {
+            height: 100%;
+            width: 78%;
+            float: left;
+            border-right: 2px solid #bcbcbc;
+        }
 
+        #r-result {
+            height: 100%;
+            width: 20%;
+            float: left;
+        }
         #r-result {
             width: 100%;
         }
@@ -32,33 +43,65 @@
 </body>
 </html>
 <script type="text/javascript">
-    var TianAnMen = new BMap.Point(116.404449, 39.914889);
+    //var TianAnMen = new BMap.Point(116.404449, 39.914889);
+
+    //// 创建Map实例
+    //var map = new BMap.Map("allmap");
+
+    //// 居中放大
+    //map.centerAndZoom(TianAnMen, 12);
+
+    //// 启用滚轮放大缩小
+    //map.enableScrollWheelZoom();
+
+    //// 西南角和东北角
+    //var SW = new BMap.Point(116.29579, 39.837146);
+    //var NE = new BMap.Point(116.475451, 39.9764);
+    //groundOverlayOptions = {
+    //    opacity: 1,
+    //    displayOnMinLevel: 10,
+    //    displayOnMaxLevel: 14
+    //}
+    var TianAnMen = new BMap.Point(113.853638, 22.606568);
 
     // 创建Map实例
     var map = new BMap.Map("allmap");
 
     // 居中放大
-    map.centerAndZoom(TianAnMen, 12);
+    map.centerAndZoom(TianAnMen, 15);
 
     // 启用滚轮放大缩小
     map.enableScrollWheelZoom();
 
+
+
+
+
     // 西南角和东北角
-    var SW = new BMap.Point(116.29579, 39.837146);
-    var NE = new BMap.Point(116.475451, 39.9764);
+    var SW = new BMap.Point(113.843638, 22.596568);
+    var NE = new BMap.Point(113.863638, 22.614568);
 
     groundOverlayOptions = {
-        opacity: 1,
-        displayOnMinLevel: 10,
-        displayOnMaxLevel: 14
+        opacity: 0.8,
+        displayOnMinLevel: 5,
+        displayOnMaxLevel: 50
     }
+    var groundOverlay = new BMap.GroundOverlay(new BMap.Bounds(SW, NE), groundOverlayOptions);
+    // 设置GroundOverlay的图片地址
+      groundOverlay.setImageURL('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1554026728195&di=82bd67d05e6b89389b9ff41d375fa994&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F012af65542d0500000019ae92c8a2d.jpg');
+      map.addOverlay(groundOverlay);
 
     // 初始化GroundOverlay
-    var groundOverlay = new BMap.GroundOverlay(new BMap.Bounds(SW, NE), groundOverlayOptions);
+    function addMarker(point) {
+        var marker = new BMap.Marker(point);
+        console.info(marker);
+        marker.setZIndex(99999999999999999999);
+        map.addOverlay(marker);
+    }
+    addMarker(new BMap.Point(113.853638, 22.606568))
 
-    // 设置GroundOverlay的图片地址
-    groundOverlay.setImageURL('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1554026728195&di=82bd67d05e6b89389b9ff41d375fa994&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F012af65542d0500000019ae92c8a2d.jpg');
-    map.addOverlay(groundOverlay);
+
+
     // 单击事件
     groundOverlay.addEventListener('click', function (clickEvent) {
         // console.log('clickEvent', clickEvent);
@@ -71,9 +114,9 @@
 
     function addGroundOverlay() {
         // 添加GroundOverlay
-        
-        
-       // map.addOverlay(groundOverlay);
+
+
+        // map.addOverlay(groundOverlay);
     }
 
     function removeGroundOverlay() {
@@ -88,28 +131,29 @@
         var classint = 0;//定义数组的下标 
 
         var tags = document.getElementsByTagName("*");//获取HTML的所有标签 
-       
+
         for (var i in tags) {//对标签进行遍历 
 
-           // if (tags[i].nodeType == 1) {//判断节点类型 
+            // if (tags[i].nodeType == 1) {//判断节点类型 
 
-                if (tags[i].getAttribute("class") == classnames)//判断和需要CLASS名字相同的，并组成一个数组 
+            if (tags[i].getAttribute("class") == classnames)//判断和需要CLASS名字相同的，并组成一个数组 
 
-                {
-                    console.info(1);
-                    return tags[i];
+            {
+                console.info(1);
+                return tags[i];
 
-                }
+            }
 
             //}
 
         }
     }
-    setTimeout(function () { 
+    setTimeout(function () {
         var v = getElementsClass(" anchorBL");
         v.innerHTML = "";
         var v = getElementsClass(" BMap_cpyCtrl BMap_noprint anchorBL");
         v.innerHTML = "";
-    },1000)
+    }, 1000)
+    
 </script>
 
