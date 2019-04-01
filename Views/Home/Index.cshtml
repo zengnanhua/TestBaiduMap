@@ -64,23 +64,22 @@
     //}
     var TianAnMen = new BMap.Point(113.853638, 22.606568);
 
-    // 创建Map实例
+    // 创建Map实例 { enableMapClick: false }
     var map = new BMap.Map("allmap");
 
     // 居中放大
-    map.centerAndZoom(TianAnMen, 15);
+    map.centerAndZoom(TianAnMen, 16);
 
     // 启用滚轮放大缩小
     map.enableScrollWheelZoom();
-
+    map.addControl(new BMap.NavigationControl()); 
 
 
 
 
     // 西南角和东北角
-    var SW = new BMap.Point(113.843638, 22.596568);
+    var SW = new BMap.Point(113.846638, 22.604000);
     var NE = new BMap.Point(113.863638, 22.614568);
-
     groundOverlayOptions = {
         opacity: 0.8,
         displayOnMinLevel: 5,
@@ -91,15 +90,38 @@
       groundOverlay.setImageURL('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1554026728195&di=82bd67d05e6b89389b9ff41d375fa994&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F012af65542d0500000019ae92c8a2d.jpg');
       map.addOverlay(groundOverlay);
 
+
     // 初始化GroundOverlay
     function addMarker(point) {
-        var marker = new BMap.Marker(point);
-        console.info(marker);
-        marker.setZIndex(99999999999999999999);
+        var marker = new BMap.Marker(point, { title: "dfasdf" });
+     
+        marker.addEventListener('click', function () { 
+            alert('sdfd');
+        });
+        
+        marker.setZIndex(999)
         map.addOverlay(marker);
+        console.info(marker);
     }
-    addMarker(new BMap.Point(113.853638, 22.606568))
 
+    var markerList = [];
+    markerList.push(new BMap.Marker(new BMap.Point(113.853638, 22.606568), { title: "dfasdf" }));
+    markerList.push(new BMap.Marker(new BMap.Point(113.846638, 22.604000), { title: "dfasdf" }));
+    markerList.push(new BMap.Marker(new BMap.Point(113.863638, 22.614568), { title: "dfasdf" }));
+
+    for (var i in markerList) { 
+        markerList[i].addEventListener('click', function () {
+            alert('sdfd');
+        });
+        map.addOverlay(markerList[i]);
+    }
+
+    setTimeout(function () {
+        for (var i in markerList) {
+            markerList[i].Yc.parentNode.parentNode.style.zIndex = 500;
+        }
+     },1000)
+   
 
 
     // 单击事件
